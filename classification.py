@@ -170,8 +170,8 @@ class LongformerClassifier(pl.LightningModule):
         # 保存超参数
         self.save_hyperparameters(init_args)
         # 设置序列长度和分类器
-        # self.hparams.seqlen = self.model.config.max_position_embeddings
-        self.hparams.seqlen = 512
+        self.hparams.seqlen = self.model.config.max_position_embeddings
+        # self.hparams.seqlen = 512
         self.classifier = nn.Linear(config.hidden_size, init_args.num_labels)
 
         # 初始化用于存储验证步骤输出的列表

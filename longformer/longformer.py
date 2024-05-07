@@ -6,8 +6,8 @@ import torch.nn.functional as F
 from longformer.diagonaled_mm_tvm import diagonaled_mm as diagonaled_mm_tvm, mask_invalid_locations
 from longformer.sliding_chunks import sliding_chunks_matmul_qk, sliding_chunks_matmul_pv
 from longformer.sliding_chunks import sliding_chunks_no_overlap_matmul_qk, sliding_chunks_no_overlap_matmul_pv
-from transformers.modeling_roberta import RobertaConfig, RobertaModel, RobertaForMaskedLM
-from transformers.modeling_bert import BertConfig, BertModel, BertForMaskedLM
+from transformers.models.roberta.modeling_roberta import RobertaConfig, RobertaModel, RobertaForMaskedLM
+from transformers.models.bert.modeling_bert import BertConfig, BertModel, BertForMaskedLM
 
 
 class Longformer(BertModel):
@@ -95,6 +95,7 @@ class LongformerSelfAttention(nn.Module):
         head_mask=None,
         encoder_hidden_states=None,
         encoder_attention_mask=None,
+        past_key_value = None,
         output_attentions=False,
     ):
         '''
