@@ -510,7 +510,7 @@ def parse_args():
     parser.add_argument('--model_dir', dest='model_dir', default='D:\\models\\longformer-chinese-base-4096', help='path to the model')
     parser.add_argument('--config_path', default=None, help='path to the config (if not setting dir)')
     parser.add_argument('--checkpoint_path', default=None, help='path to the model (if not setting checkpoint)')
-    parser.add_argument('--attention_mode', required=True, default='sliding_chunks')
+    parser.add_argument('--attention_mode', default='sliding_chunks')
     parser.add_argument('--tokenizer', default='D:\\models\\longformer-chinese-base-4096')
     parser.add_argument('--train_file')
     parser.add_argument('--dev_file')
@@ -518,7 +518,7 @@ def parse_args():
     parser.add_argument('--input_dir', default=None, help='optionally provide a directory of the data and train/test/dev files will be automatically detected')
     parser.add_argument('--batch_size', default=1, type=int)
     parser.add_argument('--grad_accum', default=1, type=int)
-    parser.add_argument('--gpus', default=1)
+    parser.add_argument('--gpus', default='1')
     parser.add_argument('--seed', default=2012, type=int)
     parser.add_argument('--fp16', default=False, action='store_true')
     parser.add_argument('--test_only', default=False, action='store_true')
@@ -627,7 +627,7 @@ def main():
         # 从指定检查点加载 Longformer 分类器模型
         model = LongformerClassifier.load_from_checkpoint(args.test_checkpoint, num_labels=args.num_labels)
         # 设置训练器参数，包括使用的 GPU 数量和测试数据的百分比
-        trainer = pl.Trainer(gpus=args.gpus, test_percent_check=args.test_percent_check)
+        trainer = pl.Trainer(devices=args.gpus)
         # 执行模型测试
         trainer.test(model)
 
